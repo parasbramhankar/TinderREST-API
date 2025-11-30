@@ -7,7 +7,10 @@ public class Person {
     private String city;
     private String gender;
     private int age;
-    private String Education;
+    private String education;
+
+    public Person(){
+    }
 
     public Person(int id, String name, String city, String gender, int age, String education) {
         this.id = id;
@@ -15,7 +18,7 @@ public class Person {
         this.city = city;
         this.gender = gender;
         this.age = age;
-        Education = education;
+        this.education = education;
     }
 
     public int getId() {
@@ -59,22 +62,10 @@ public class Person {
     }
 
     public String getEducation() {
-        return Education;
+        return education;
     }
 
     public void setEducation(String education) {
-        Education = education;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", city='" + city + '\'' +
-                ", gender='" + gender + '\'' +
-                ", age=" + age +
-                ", Education='" + Education + '\'' +
-                '}';
+        this.education = education;
     }
 }
