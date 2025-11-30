@@ -64,5 +64,16 @@ public class TinderController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+//    @PatchMapping("{/id}")
+//    public ResponseEntity<Person> updateEducationAndAge(@PathVariable int id, @RequestBody int age, @RequestBody String education){
+//
+//        for(Person p:personList){
+//            if(p.getId()==id){
+//
+//            }
+//        }
+//    }
+
+
 
 }
