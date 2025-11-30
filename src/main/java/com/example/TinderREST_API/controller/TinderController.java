@@ -3,7 +3,6 @@ package com.example.TinderREST_API.controller;
 import com.example.TinderREST_API.dto.Person;
 import com.example.TinderREST_API.service.TinderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,66 +13,47 @@ import java.util.List;
 @RequestMapping("/api")
 public class TinderController {
 
-    List<Person>personList;
-    List<Person>personListByGender;
-
     @Autowired
     TinderService tinderService;
 
-    @Value("${User.gender}")
-    String userGender;
-
     @GetMapping("/persons")
-    public List<Person>getAllPerson(){
-        personList=tinderService.getAllPerson();
-        personListByGender=tinderService.filterPerson();
-        return personListByGender;
+    public List<Person>getPersons(){
+       return tinderService.filterPersonByGender();
     }
 
     @PostMapping("/create-person")
     public Person createPerson(@RequestBody Person person){
-        personList.add(person);
-
-        if(!userGender.equalsIgnoreCase(person.getGender())){
-            personListByGender.add(person);
-        }
-
-        return person;
+        return tinderService.addPerson(person);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updatePerson(@PathVariable int id, @RequestBody Person person){
+    public ResponseEntity<String> updatePerson(@PathVariable int id, @RequestBody Person person){
 
-        Person finalObj=null;
-        for(Person obj:personList){
-            if(obj.getId()==id){
-                finalObj=obj;
-                break;
-            }
-        }
-
-        if(finalObj!=null){
-            finalObj.setName(person.getName());
-            finalObj.setAge(person.getAge());
-            finalObj.setGender(person.getGender());
-            finalObj.setCity(person.getCity());
-            finalObj.setEducation(person.getEducation());
-
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+       boolean updated=tinderService.updatePerson(id,person);
+       if(updated){
+           return ResponseEntity.status(HttpStatus.OK).body("Person details updated successfully");
+       }
+       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
 
-//    @PatchMapping("{/id}")
-//    public ResponseEntity<Person> updateEducationAndAge(@PathVariable int id, @RequestBody int age, @RequestBody String education){
-//
-//        for(Person p:personList){
-//            if(p.getId()==id){
-//
-//            }
-//        }
-//    }
+    @PatchMapping("{/id}")
+    public ResponseEntity<String> updateEducationAndAge(@PathVariable int id, @RequestBody int age, @RequestBody String education){
 
+        boolean updated=tinderService.updateAgeAndEducation(id,age,education);
+        if(updated){
+            return ResponseEntity.status(HttpStatus.OK).body("Education & Age updated Successfully");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person not found");
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePerson(@PathVariable int id){
+        boolean deleted=tinderService.deletePerson(id);
+
+        if(deleted){
+            return ResponseEntity.status(HttpStatus.OK).body("Person deleted successfully");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person Not found");
+    }
 
 }
