@@ -1,5 +1,10 @@
 package com.example.TinderREST_API.service;
 
-public interface TinderService {
+import com.example.TinderREST_API.dto.Person;
 
+import java.util.List;
+
+public interface TinderService {
+  List<Person> getAllPerson();
+  List<Person> filterPerson();
 }
