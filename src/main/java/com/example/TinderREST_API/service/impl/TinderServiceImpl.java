@@ -51,6 +51,7 @@ public class TinderServiceImpl implements TinderService {
 
         for(Person p:personList){
             if(p.getId()==id){
+
                 p.setName(person.getName());
                 p.setCity(person.getCity());
                 p.setEducation(person.getEducation());
@@ -58,6 +59,7 @@ public class TinderServiceImpl implements TinderService {
                 p.setAge(person.getAge());
 
                 return true;
+
             }
         }
         return false;
