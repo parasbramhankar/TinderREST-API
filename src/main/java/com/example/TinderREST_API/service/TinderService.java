@@ -9,6 +9,6 @@ public interface TinderService {
   List<Person>filterPersonByGender();
   Person addPerson(Person person);
   boolean updatePerson(int id, Person person);
-  boolean updateAgeAndEducation(int id, int age, String education);
+  boolean updateEducation(int id, String education);
   boolean deletePerson(int id);
 }
