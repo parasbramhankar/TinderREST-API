@@ -21,12 +21,12 @@ public class TinderController {
        return tinderService.filterPersonByGender();
     }
 
-    @PostMapping("/create-person")
+    @PostMapping("/create")
     public Person createPerson(@RequestBody Person person){
         return tinderService.addPerson(person);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/id")
     public ResponseEntity<String> updatePerson(@PathVariable int id, @RequestBody Person person){
 
        boolean updated=tinderService.updatePerson(id,person);
@@ -36,17 +36,17 @@ public class TinderController {
        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
 
-    @PatchMapping("{/id}")
-    public ResponseEntity<String> updateEducationAndAge(@PathVariable int id, @RequestBody int age, @RequestBody String education){
+    @PatchMapping("/id")
+    public ResponseEntity<String> updateEducation(@PathVariable int id, @RequestBody String education){
 
-        boolean updated=tinderService.updateAgeAndEducation(id,age,education);
+        boolean updated=tinderService.updateEducation(id,education);
         if(updated){
-            return ResponseEntity.status(HttpStatus.OK).body("Education & Age updated Successfully");
+            return ResponseEntity.status(HttpStatus.OK).body("Education updated Successfully");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person not found");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id")
     public ResponseEntity<String> deletePerson(@PathVariable int id){
         boolean deleted=tinderService.deletePerson(id);
 
