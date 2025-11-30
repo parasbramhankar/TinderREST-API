@@ -1,19 +1,29 @@
 package com.example.TinderREST_API.dto;
 
 public class Person {
+
+    private int id;
     private String name;
     private String city;
     private String gender;
     private int age;
     private String Education;
 
-
-    public Person(String name, String city, String gender, int age, String education) {
+    public Person(int id, String name, String city, String gender, int age, String education) {
+        this.id = id;
         this.name = name;
         this.city = city;
         this.gender = gender;
         this.age = age;
         Education = education;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -59,7 +69,8 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", city='" + city + '\'' +
                 ", gender='" + gender + '\'' +
                 ", age=" + age +
