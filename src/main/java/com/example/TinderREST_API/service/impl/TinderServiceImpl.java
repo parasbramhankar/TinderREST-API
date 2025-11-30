@@ -64,11 +64,10 @@ public class TinderServiceImpl implements TinderService {
     }
 
     @Override
-    public boolean updateAgeAndEducation(int id, int age, String education){
+    public boolean updateEducation(int id, String education){
         for(Person p:personList){
             if(p.getId()==id){
                 p.setEducation(education);
-                p.setAge(age);
                 return true;
             }
         }
