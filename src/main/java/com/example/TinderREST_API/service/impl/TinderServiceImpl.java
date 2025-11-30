@@ -11,29 +11,25 @@ import java.util.List;
 
 @Service
 public class TinderServiceImpl implements TinderService {
+    public List<Person>personList=new ArrayList<>();
 
+    @Value("${user.gender}")
+    String userGender;
 
-    Person amit=new Person(1,"Amit","Gondia","M",20,"B.Sc");
-    Person lokesh=new Person(2,"Lokesh","Nagpur","M",23,"B.tech");
-    Person dimple=new Person(3,"Dimple","Pune","F",25,"B.Com");
-    Person pinky= new Person(4,"Pinky","chennai","F",23,"B.tech");
+    public TinderServiceImpl(){
+        personList.add(new Person(1,"Amit","Gondia","M",20,"B.Sc"));
+        personList.add(new Person(2,"Lokesh","Nagpur","M",23,"B.tech"));
+        personList.add(new Person(3,"Dimple","Pune","F",25,"B.Com"));
+        personList.add(new Person(4,"Pinky","Chennai","F",23,"B.tech"));
+    }
 
-    List<Person>personList=new ArrayList<>();
-
+    @Override
     public List<Person> getAllPerson(){
-        personList.add(amit);
-        personList.add(lokesh);
-        personList.add(dimple);
-        personList.add(pinky);
-
         return personList;
     }
 
-    @Value("${User.gender}")
-    String userGender;
-
-    public List<Person>filterPerson(){
-
+    @Override
+    public List<Person>filterPersonByGender(){
         List<Person>per=new ArrayList<>();
 
         for(Person obj:personList){
@@ -41,12 +37,52 @@ public class TinderServiceImpl implements TinderService {
                 per.add(obj);
             }
         }
-
         return per;
     }
 
+    @Override
+    public Person addPerson(Person person){
+        personList.add(person);
+        return person;
+    }
 
+    @Override
+    public boolean updatePerson(int id, Person person){
 
+        for(Person p:personList){
+            if(p.getId()==id){
+                p.setName(person.getName());
+                p.setCity(person.getCity());
+                p.setEducation(person.getEducation());
+                p.setGender(person.getGender());
+                p.setAge(person.getAge());
 
+                return true;
+            }
+        }
+        return false;
+    }
 
+    @Override
+    public boolean updateAgeAndEducation(int id, int age, String education){
+        for(Person p:personList){
+            if(p.getId()==id){
+                p.setEducation(education);
+                p.setAge(age);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deletePerson(int id){
+        for(Person p:personList){
+            if(p.getId()==id){
+                personList.remove(p);
+                return true;
+            }
+        }
+        return false;
+    }
 }
